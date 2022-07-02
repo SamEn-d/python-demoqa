@@ -67,8 +67,13 @@ def test_automation_practice_form():
     # print(upload_file_name('img.jpg'))
     # browser.element('#uploadPicture')#.perform(upload_file_name('imgsss.jpg'))
 
-    browser.element('#currentAddress').type(Student.address)
+    browser.element('#uploadPicture').send_keys(resource('img.jpg'))
 
+    # browser.element('#uploadPicture').send_keys(
+    #     resource('pexels-vinicius-vieira-ft-3151954.jpg')
+    # )
+
+    browser.element('#currentAddress').type(Student.address)
     uttar_pradesh = browser.element('#react-select-3-option-1')
     browser.element('#state').click()
     uttar_pradesh.click()
@@ -95,6 +100,19 @@ def test_automation_practice_form():
     table_row_selector_search(5).should(have.exact_text(f'{Student.day} January,{Student.year}'))
     table_row_selector_search(6).should(have.exact_text(f'{Student.subjects[0]}, {Student.subjects[1]}'))
     table_row_selector_search(7).should(have.exact_text(f'{Hobbies.sports}, {Hobbies.reading}, {Hobbies.music}'))
-    table_row_selector_search(8).should(have.exact_text(f''))
+    table_row_selector_search(8).should(have.exact_text('img.jpg'))
     table_row_selector_search(9).should(have.exact_text(Student.address))
     table_row_selector_search(10).should(have.exact_text('Uttar Pradesh Lucknow'))
+
+def resource(relative_path):
+    import python_demoqa
+    from pathlib import Path
+    return (
+        Path(python_demoqa.__file__)
+        .parent
+        .parent
+        .joinpath('resources/')
+        .joinpath(relative_path)
+        .absolute()
+        .__str__()
+    )
