@@ -45,52 +45,56 @@ def test_automation_practice_form():
     browser.element(f'.react-datepicker__year-select [value="{Student.year}"]').click()
     browser.element(f'.react-datepicker__month .react-datepicker__week .react-datepicker__day--0{Student.day}').click()
 
-    #Сделать иначе сабджект
-    # ['English', 'Physics']
+
     english = browser.element('#subjectsInput').set_value(Student.subjects[0])
     english.press_enter()
 
     physics = browser.element('#subjectsInput').set_value(Student.subjects[1])
     physics.press_tab()
-    #
-    # english = browser.element('#subjectsInput').set_value(Student.subjectsInput[0]).press_enter()
-    # physics = browser.element('#subjectsInput').set_value(Student.subjectsInput[1]).press_enter()
-    # browser.element('#subjectsInput').set_value(Student.subjectsInput[0]).press_enter()
-    # browser.element('#subjectsInput').set_value(Student.subjectsInput[1]).press_enter()
 
-    #Сделать как за решеткой но сделать понятные переменные
+    hobbies_music = browser.element('[for="hobbies-checkbox-1"]')
+    hobbies_music.click()
+    hobbies_sports = browser.element('[for="hobbies-checkbox-2"]')
+    hobbies_sports.click()
+    hobbies_reading = browser.element('[for="hobbies-checkbox-3"]')
+    hobbies_reading.click()
+    '''
+    # OR
     browser.element(by.text(Hobbies.music)).click() # browser.element('[for="hobbies-checkbox-1"]').click()
     browser.element(by.text(Hobbies.sports)).click() # browser.element('[for="hobbies-checkbox-2"]').click()
     browser.element(by.text(Hobbies.reading)).click() # browser.element('[for="hobbies-checkbox-3"]').click()
+    '''
     # print(upload_file_name('img.jpg'))
     # browser.element('#uploadPicture')#.perform(upload_file_name('imgsss.jpg'))
 
     browser.element('#currentAddress').type(Student.address)
 
-    #Прописать какой стейт и добавить переменные \ хелпер, смотреть скрин
+    uttar_pradesh = browser.element('#react-select-3-option-1')
     browser.element('#state').click()
-    browser.element('#react-select-3-option-1').click()
+    uttar_pradesh.click()
+
+    lucknow = browser.element('#city #react-select-4-option-1')
     browser.element('#city').click()
-    browser.element('#city #react-select-4-option-1').click()
-    # browser.element('#uploadPicture').send_keys('/img.jpg')
+    lucknow.click()
+
     browser.element('#submit').perform(command.js.click)
 
 
     #Then
-    def tr_table_search(number_tr):
-        return browser.element(f'.table-responsive tbody tr:nth-child({number_tr}) td:nth-child(2)')
+    def table_row_selector_search(number):
+        return browser.element('.table').all('tr')[number].element('td:nth-child(2)')
+        '''
+        #OR
+        return browser.element('.table tbody').element(f'tr:nth-child({number}').element('td:nth-child(2)')
+        '''
 
-    tr_table_search(1).should(have.exact_text(f'{Student.name} {Student.lastname}'))
-    tr_table_search(2).should(have.exact_text(Student.mail))
-    tr_table_search(3).should(have.exact_text('Male'))
-    tr_table_search(4).should(have.exact_text(Student.mobile_number))
-    tr_table_search(5).should(have.exact_text(f'{Student.day} January,{Student.year}'))
-    #Падает
-    tr_table_search(6).should(have.exact_text(f'{Student.subjects[0]} {Student.subjects[1]}'))
-    tr_table_search(7).should(have.exact_text(f'{Hobbies.music}, {Hobbies.sports}, {Hobbies.reading}'))
-    tr_table_search(8).should(have.exact_text(f''))
-    tr_table_search(9).should(have.exact_text(Student.address))
-    tr_table_search(10).should(have.exact_text('Uttar Pradesh Lucknow'))
-
-    import time
-    time.sleep(5) #Для отладки
+    table_row_selector_search(1).should(have.exact_text(f'{Student.name} {Student.lastname}'))
+    table_row_selector_search(2).should(have.exact_text(Student.mail))
+    table_row_selector_search(3).should(have.exact_text('Male'))
+    table_row_selector_search(4).should(have.exact_text(Student.mobile_number))
+    table_row_selector_search(5).should(have.exact_text(f'{Student.day} January,{Student.year}'))
+    table_row_selector_search(6).should(have.exact_text(f'{Student.subjects[0]}, {Student.subjects[1]}'))
+    table_row_selector_search(7).should(have.exact_text(f'{Hobbies.sports}, {Hobbies.reading}, {Hobbies.music}'))
+    table_row_selector_search(8).should(have.exact_text(f''))
+    table_row_selector_search(9).should(have.exact_text(Student.address))
+    table_row_selector_search(10).should(have.exact_text('Uttar Pradesh Lucknow'))
