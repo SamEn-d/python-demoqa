@@ -1,56 +1,35 @@
 from selene.support.shared import browser
 from selene import be, have, by, command
-
-
+from python_demoqa.controls import path_to_directory
+from python_demoqa.controls.tags_input import TagsInput
+from python_demoqa.controls.dropdown import Dropdown
+from python_demoqa.controls import date_picker
+from python_demoqa.controls.table import Table
 
 def browser_page_automation_practice_form():
     browser.open('automation-practice-form')
     browser.driver.set_window_size(width=1920, height=1080)
-    '''
-    # Это нужно для скрытия элемента, сейчас решение через js клик
-    browser.execute_script("document.querySelector('#app > footer').style.display='none'")
-    '''
 
 def test_automation_practice_form():
     #Given
     browser_page_automation_practice_form()
 
-    class Hobbies:
-        music = 'Music'
-        sports = 'Sports'
-        reading = 'Reading'
-
-    class Student:
-        name = 'Sam'
-        lastname = 'End'
-        mail = 'w@wth.su'
-        mobile_number = '8800755353'
-        subjects = ['English', 'Physics']
-        address = 'Mou" adress tak daleko chto хочется плакать'
-        day = '10'
-        year = '1990'
-
     #When
-    browser.element('#firstName').type(Student.name)
-    browser.element('#lastName').type(Student.lastname)
-    browser.element('#userEmail').type(Student.mail)
+    browser.element('#firstName').set_value('Sam')
+    browser.element('#lastName').type('End')
+    browser.element('#userEmail').type('w@wth.su')
 
     gender_male = browser.element('[for="gender-radio-1"]')
     gender_male.click()
 
-    browser.element('#userNumber').type(Student.mobile_number)
+    mobile_number = browser.element('#userNumber')
+    mobile_number.type('8800755353')
 
-    browser.element('#dateOfBirthInput').click()
-    browser.element('.react-datepicker__month-select [value="0"]').click()
-    browser.element(f'.react-datepicker__year-select [value="{Student.year}"]').click()
-    browser.element(f'.react-datepicker__month .react-datepicker__week .react-datepicker__day--0{Student.day}').click()
-
-
-    english = browser.element('#subjectsInput').set_value(Student.subjects[0])
-    english.press_enter()
-
-    physics = browser.element('#subjectsInput').set_value(Student.subjects[1])
-    physics.press_tab()
+    date_picker.set_to_js('31 Jul 1980')
+    '''
+    # OR
+    # date_picker.from_list('20', '4','1990')
+    '''
 
     hobbies_music = browser.element('[for="hobbies-checkbox-1"]')
     hobbies_music.click()
@@ -60,59 +39,39 @@ def test_automation_practice_form():
     hobbies_reading.click()
     '''
     # OR
-    browser.element(by.text(Hobbies.music)).click() # browser.element('[for="hobbies-checkbox-1"]').click()
-    browser.element(by.text(Hobbies.sports)).click() # browser.element('[for="hobbies-checkbox-2"]').click()
-    browser.element(by.text(Hobbies.reading)).click() # browser.element('[for="hobbies-checkbox-3"]').click()
+    browser.element(by.text(Hobbies.music)).click()
+    browser.element(by.text(Hobbies.sports)).click()
+    browser.element(by.text(Hobbies.reading)).click()
     '''
-    # print(upload_file_name('img.jpg'))
-    # browser.element('#uploadPicture')#.perform(upload_file_name('imgsss.jpg'))
 
-    browser.element('#uploadPicture').send_keys(resource('img.jpg'))
+    browser.element('#uploadPicture').send_keys(path_to_directory.filename('img.jpg'))
 
-    # browser.element('#uploadPicture').send_keys(
-    #     resource('pexels-vinicius-vieira-ft-3151954.jpg')
-    # )
+    browser.element('#currentAddress').type('Mou" adress tak daleko chto хочется плакать')
 
-    browser.element('#currentAddress').type(Student.address)
-    uttar_pradesh = browser.element('#react-select-3-option-1')
-    browser.element('#state').click()
-    uttar_pradesh.click()
+    subjects = TagsInput()
+    subjects.add('Chem', autocomplete='Chemistry', css_class='.subjects-auto-complete__option')
+    subjects.add('Maths')
+    subjects.press_enter('Arts')
+    subjects.press_tab('History')
 
-    lucknow = browser.element('#city #react-select-4-option-1')
-    browser.element('#city').click()
-    lucknow.click()
+
+    dropdown_state = Dropdown()
+    dropdown_state.set_in_list('Uttar Pradesh')
+
+    dropdown_city = Dropdown('#city')
+    dropdown_city.autocomplite('Lucknow')
 
     browser.element('#submit').perform(command.js.click)
 
-
     #Then
-    def table_row_selector_search(number):
-        return browser.element('.table').all('tr')[number].element('td:nth-child(2)')
-        '''
-        #OR
-        return browser.element('.table tbody').element(f'tr:nth-child({number}').element('td:nth-child(2)')
-        '''
 
-    table_row_selector_search(1).should(have.exact_text(f'{Student.name} {Student.lastname}'))
-    table_row_selector_search(2).should(have.exact_text(Student.mail))
-    table_row_selector_search(3).should(have.exact_text('Male'))
-    table_row_selector_search(4).should(have.exact_text(Student.mobile_number))
-    table_row_selector_search(5).should(have.exact_text(f'{Student.day} January,{Student.year}'))
-    table_row_selector_search(6).should(have.exact_text(f'{Student.subjects[0]}, {Student.subjects[1]}'))
-    table_row_selector_search(7).should(have.exact_text(f'{Hobbies.sports}, {Hobbies.reading}, {Hobbies.music}'))
-    table_row_selector_search(8).should(have.exact_text('img.jpg'))
-    table_row_selector_search(9).should(have.exact_text(Student.address))
-    table_row_selector_search(10).should(have.exact_text('Uttar Pradesh Lucknow'))
-
-def resource(relative_path):
-    import python_demoqa
-    from pathlib import Path
-    return (
-        Path(python_demoqa.__file__)
-        .parent
-        .parent
-        .joinpath('resources/')
-        .joinpath(relative_path)
-        .absolute()
-        .__str__()
-    )
+    Table.row_selector(1, value='Sam End')
+    Table.row_selector(2, value='w@wth.su')
+    Table.row_selector(3, value='Male')
+    Table.row_selector(4, value='8800755353')
+    Table.row_selector(5, value='07 July,2022')
+    Table.row_selector(6, value='Chemistry, Maths, Arts, History')
+    Table.row_selector(7, value='Sports, Reading, Music')
+    Table.row_selector(8, value='img.jpg')
+    Table.row_selector(9, value='Mou" adress tak daleko chto хочется плакать')
+    Table.row_selector(10, value='Uttar Pradesh Lucknow')
