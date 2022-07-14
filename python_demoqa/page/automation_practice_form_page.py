@@ -5,27 +5,23 @@ from selene.core.entity import Element
 from selene.support.shared import browser
 
 
-class setInput():
-    def __init__(self, element: Element = None, value: Optional = type):
+class SetInput():
+    def __init__(self, element: str = None, value: Optional = type):
         self.element = browser.element(element).type(value)
 
-class setTextarea(setInput):
+class SetTextarea(SetInput):
     ...
 
 
-class setCheckboxBtn():
+class SetCheckboxBtn():
     def __init__(self,   element: Element = None, /, *, whatCheck: Optional[str] = None, ):
         self.element = browser.element(element).click()
 
-class setCheckboxText():
+class SetCheckboxText():
     def __init__(self,   element: Element = None, /, *, whatCheck: Optional[str] = None, ):
         self.element = browser.element(by.text(element)).click()
 
-class set():
-    # def __init__(self, element: Element = None):
-    #     self.element = browser.element(element).click()
-    #     ...
-
+class Set():
     def first_name(self):
         browser.element('#firstName').type(self)
 

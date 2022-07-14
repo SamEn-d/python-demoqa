@@ -3,8 +3,8 @@ from selene import command
 from python_demoqa.controls.tags_input import TagsInput
 from python_demoqa.controls.dropdown import Dropdown
 from python_demoqa.controls import date_picker
-from python_demoqa.controls.table import Table
-from python_demoqa.page.automation_practice_form_page import setInput, setCheckboxBtn,setTextarea, setCheckboxText, set
+from python_demoqa.controls.tablerow import TableRow
+from python_demoqa.page.automation_practice_form_page import SetInput, SetCheckboxBtn,SetTextarea, SetCheckboxText, Set
 from python_demoqa.controls import upload
 
 def browser_page_automation_practice_form():
@@ -18,19 +18,19 @@ def test_automation_practice_form():
     #When
 
 
-    setInput('#firstName', 'Sam')
-    setInput('#lastName', 'End')
-    setInput('#userEmail', 'w@wth.su')
-    setInput('#userNumber', '8800755353')
+    SetInput('#firstName', 'Sam')
+    SetInput('#lastName', 'End')
+    SetInput('#userEmail', 'w@wth.su')
+    SetInput('#userNumber', '8800755353')
     '''
     # OR
-    set.first_name('Sam')
-    set.last_name('End')
-    set.email('w@wth.su')
-    set.phone_number('8800755353')
+    Set.first_name('Sam')
+    Set.last_name('End')
+    Set.email('w@wth.su')
+    Set.phone_number('8800755353')
     '''
 
-    setCheckboxBtn('[for="gender-radio-1"]', whatCheck='Male')
+    SetCheckboxBtn('[for="gender-radio-1"]', whatCheck='Male')
 
     date_picker.from_list('31', '6', '1990')
     '''
@@ -38,9 +38,9 @@ def test_automation_practice_form():
     date_picker.set_to_js('31 Jul 1980')
     '''
 
-    setCheckboxBtn('[for="hobbies-checkbox-1"]', whatCheck='Хобби Sports')
-    setCheckboxBtn('[for="hobbies-checkbox-2"]', whatCheck='Хобби Reading')
-    setCheckboxBtn('[for="hobbies-checkbox-3"]', whatCheck='Хобби Music')
+    SetCheckboxBtn('[for="hobbies-checkbox-1"]', whatCheck='Хобби Sports')
+    SetCheckboxBtn('[for="hobbies-checkbox-2"]', whatCheck='Хобби Reading')
+    SetCheckboxBtn('[for="hobbies-checkbox-3"]', whatCheck='Хобби Music')
     '''
     # OR
     setCheckboxText('Sports', whatCheck='Хобби Music')
@@ -50,7 +50,7 @@ def test_automation_practice_form():
 
     upload.File('img.jpg')
 
-    setTextarea('#currentAddress', 'Mou" adress tak daleko chto хочется плакать')
+    SetTextarea('#currentAddress', 'Mou" adress tak daleko chto хочется плакать')
 
     subjects = TagsInput()
     subjects.add('Chem', autocomplete='Chemistry', css_class='.subjects-auto-complete__option')
@@ -62,7 +62,7 @@ def test_automation_practice_form():
     browser.element('#submit').perform(command.js.click)
 
     #Then
-    result = Table
+    result = TableRow
     result.row_selector(1, value='Sam End')
     result.row_selector(2, value='w@wth.su')
     result.row_selector(3, value='Male')
