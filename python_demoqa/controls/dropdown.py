@@ -6,7 +6,7 @@ from typing import Optional
 element: SeleneElement = ...
 
 class Dropdown():
-    def __init__(self, id_class_parent: Element = None ):
+    def __init__(self, id_class_parent: str = None ):
         self.id_class_parent = id_class_parent if id_class_parent else '#state'
 
     def autocomplite(self,name, search_text_id: Optional[str] = '[id^=react-select]'):

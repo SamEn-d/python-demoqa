@@ -6,6 +6,7 @@ from python_demoqa.controls import date_picker
 from python_demoqa.controls.tablerow import TableRow
 from python_demoqa.page.automation_practice_form_page import SetInput, SetCheckboxBtn,SetTextarea, SetCheckboxText, Set
 from python_demoqa.controls import upload
+from python_demoqa.controls.date_picker import DatePicker
 
 def browser_page_automation_practice_form():
     browser.open('automation-practice-form')
@@ -16,8 +17,6 @@ def test_automation_practice_form():
     browser_page_automation_practice_form()
 
     #When
-
-
     SetInput('#firstName', 'Sam')
     SetInput('#lastName', 'End')
     SetInput('#userEmail', 'w@wth.su')
@@ -32,11 +31,25 @@ def test_automation_practice_form():
 
     SetCheckboxBtn('[for="gender-radio-1"]', whatCheck='Male')
 
-    date_picker.from_list('31', '6', '1990')
+    # date_picker.from_list('31', '6', '1990')
     '''
     # OR
     date_picker.set_to_js('31 Jul 1980')
+    
+    # Мама сказала что нужно сделать по ООП :(
+    #OR 
+    birth_date = DatePicker(browser.element('#dateOfBirthInput'))
+    birth_date.select_year(1990).select_month(6).select_day(31) 
+    #OR
+    DatePicker(browser.element('#dateOfBirthInput')).set_to_js('31 Jul 1990')
     '''
+
+
+    # calendar = '#dateOfBirthInput'
+    # browser.element(calendar).click()
+    # date_of_birth = DatePicker(browser.element('#dateOfBirth'))
+    # date_of_birth.select_year(1989).select_month(Months.August).select_day(15)
+    # # date_of_birth.set_date(calendar, '15 Aug 1989')
 
     SetCheckboxBtn('[for="hobbies-checkbox-1"]', whatCheck='Хобби Sports')
     SetCheckboxBtn('[for="hobbies-checkbox-2"]', whatCheck='Хобби Reading')

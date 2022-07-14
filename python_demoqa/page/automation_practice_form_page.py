@@ -14,11 +14,11 @@ class SetTextarea(SetInput):
 
 
 class SetCheckboxBtn():
-    def __init__(self,   element: Element = None, /, *, whatCheck: Optional[str] = None, ):
+    def __init__(self,   element: str = None, /, *, whatCheck: Optional[str] = None, ):
         self.element = browser.element(element).click()
 
 class SetCheckboxText():
-    def __init__(self,   element: Element = None, /, *, whatCheck: Optional[str] = None, ):
+    def __init__(self,   element: int = None, /, *, whatCheck: Optional[str] = None, ):
         self.element = browser.element(by.text(element)).click()
 
 class Set():
