@@ -31,7 +31,7 @@ def test_automation_practice_form():
 
     SetCheckboxBtn('[for="gender-radio-1"]', whatCheck='Male')
 
-    # date_picker.from_list('31', '6', '1990')
+    date_picker.from_list('31', '6', '1990')
     '''
     # OR
     date_picker.set_to_js('31 Jul 1980')
