@@ -4,9 +4,8 @@ from python_demoqa.controls.tags_input import TagsInput
 from python_demoqa.controls.dropdown import Dropdown
 from python_demoqa.controls import date_picker
 from python_demoqa.controls.tablerow import TableRow
-from python_demoqa.page.automation_practice_form_page import SetGender, SetInput, SetCheckboxBtn,SetTextarea, SetCheckboxText, Set, Hobbies
+from python_demoqa.page.automation_practice_form_page import SetGender, SetInput,SetTextarea, Hobbies, Set
 from python_demoqa.controls import upload
-from python_demoqa.controls.date_picker import DatePicker
 
 def browser_page_automation_practice_form():
     browser.open('automation-practice-form')
@@ -47,7 +46,6 @@ def test_automation_practice_form():
      .press_enter('Arts')
      .press_tab('History')
     )
-
 
     Dropdown().set_in_list('Uttar Pradesh')
     Dropdown('#city').autocomplite('Lucknow')

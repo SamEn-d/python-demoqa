@@ -12,15 +12,6 @@ class SetInput():
 class SetTextarea(SetInput):
     ...
 
-
-class SetCheckboxBtn():
-    def __init__(self,   element: str = None, /, *, whatCheck: Optional[str] = None, ):
-        self.element = browser.element(element).click()
-
-class SetCheckboxText():
-    def __init__(self,   element: str = None, /, *, whatCheck: Optional[str] = None, ):
-        self.element = browser.element(by.text(element)).click()
-
 class Hobbies():
     def __init__(self):
         self.element = browser.element('#hobbiesWrapper').all('label')
