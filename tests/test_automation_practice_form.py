@@ -15,18 +15,56 @@ def test_automation_practice_form():
     #Given
     browser_page_automation_practice_form()
 
+    # When
+    fill_form = Set()
+    (fill_form
+     .first_name('Sam')
+     .last_name('End')
+     .email('w@wth.su')
+     .phone_number('8800755353')
+     .gender('Male')
+     .birthdate('31', '6', '1990')
+     .subjects('Chemistry', 'Maths', 'Physics', 'Arts', 'History')
+     .hobbies('Sports', 'Reading', 'Music')
+     .picture('img.jpg')
+     .adress('Mou" adress tak daleko chto хочется плакать')
+     .state('Uttar Pradesh')
+     .city('Lucknow')
+     .submit()
+    )
+
+    #Then
+    result = TableRow
+    result.row_selector(1, value='Sam End')
+    result.row_selector(2, value='w@wth.su')
+    result.row_selector(3, value='Male')
+    result.row_selector(4, value='8800755353')
+    result.row_selector(5, value='31 July,1990')
+    result.row_selector(6, value='Chemistry, Maths, Physics, Arts, History')
+    result.row_selector(7, value='Sports, Reading, Music')
+    result.row_selector(8, value='img.jpg')
+    result.row_selector(9, value='Mou" adress tak daleko chto хочется плакать')
+    result.row_selector(10, value='Uttar Pradesh Lucknow')
+
+
+
+
+
+
+
+'''    
     #When
     SetInput('#firstName', 'Sam')
     SetInput('#lastName', 'End')
     SetInput('#userEmail', 'w@wth.su')
     SetInput('#userNumber', '8800755353')
-    '''
+    ''' '''
     # OR
     Set.first_name('Sam')
     Set.last_name('End')
     Set.email('w@wth.su')
     Set.phone_number('8800755353')
-    '''
+    
 
     SetGender().male()
 
@@ -64,3 +102,4 @@ def test_automation_practice_form():
     result.row_selector(8, value='img.jpg')
     result.row_selector(9, value='Mou" adress tak daleko chto хочется плакать')
     result.row_selector(10, value='Uttar Pradesh Lucknow')
+'''
